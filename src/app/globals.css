@@ -1,26 +1,602 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply text-foreground;
+    min-height: 100vh;
+    position: relative;
+    background: 
+      radial-gradient(circle 400px at 15% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 70%),
+      radial-gradient(circle 500px at 85% 75%, rgba(34, 197, 94, 0.12) 0%, transparent 70%),
+      radial-gradient(circle 350px at 50% 10%, rgba(147, 51, 234, 0.1) 0%, transparent 70%),
+      radial-gradient(circle 450px at 20% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 70%),
+      #000000;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  
+  html {
+    background: 
+      radial-gradient(circle 400px at 15% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 70%),
+      radial-gradient(circle 500px at 85% 75%, rgba(34, 197, 94, 0.12) 0%, transparent 70%),
+      radial-gradient(circle 350px at 50% 10%, rgba(147, 51, 234, 0.1) 0%, transparent 70%),
+      radial-gradient(circle 450px at 20% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 70%),
+      #000000;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+  }
+  
+  /* Единый статичный фон с сферами */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      linear-gradient(135deg, #000000 0%, #0a0a0a 25%, #1a1a2e 50%, #16213e 75%, #000000 100%),
+      radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(34, 197, 94, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.1) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes grid {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(-50%) translateX(-50%);
+  }
+}
+
+.animate-grid {
+  animation: grid 15s linear infinite;
+}
+
+/* Apple-like Design Elements */
+
+/* Glassmorphism Effects */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card-dark {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Neumorphism Effects */
+.neomorphic-light {
+  background: #f0f0f3;
+  border-radius: 20px;
+  box-shadow: 
+    20px 20px 60px #bebebe,
+    -20px -20px 60px #ffffff;
+}
+
+.neomorphic-dark {
+  background: #2d2d30;
+  border-radius: 20px;
+  box-shadow: 
+    20px 20px 60px #1a1a1c,
+    -20px -20px 60px #404044;
+}
+
+.neomorphic-inset-light {
+  background: #f0f0f3;
+  border-radius: 20px;
+  box-shadow: 
+    inset 20px 20px 60px #bebebe,
+    inset -20px -20px 60px #ffffff;
+}
+
+.neomorphic-inset-dark {
+  background: #2d2d30;
+  border-radius: 20px;
+  box-shadow: 
+    inset 20px 20px 60px #1a1a1c,
+    inset -20px -20px 60px #404044;
+}
+
+/* Apple-style Buttons */
+.apple-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.apple-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.apple-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.4);
+}
+
+/* Smooth Gradients */
+.gradient-mesh {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Apple-style Cards */
+.apple-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.apple-card-dark {
+  background: rgba(28, 28, 30, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-card-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Специальный стиль для карточки с непрозрачным содержимым */
+.apple-card-dark-opaque {
+  background: rgba(28, 28, 30, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.apple-card-dark-opaque:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Непрозрачный текст и иконки внутри карточки */
+.apple-card-dark-opaque {
+  position: relative;
+  z-index: 10;
+}
+
+.apple-card-dark-opaque h3,
+.apple-card-dark-opaque p,
+.apple-card-dark-opaque .icon-container {
+  opacity: 1 !important;
+  color: rgba(255, 255, 255, 1) !important;
+  position: relative;
+  z-index: 11;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Цветные SVG иконки для каждого типа карточки - ОСНОВНЫЕ ПРАВИЛА */
+.apple-card-dark-opaque svg {
+  opacity: 1 !important;
+  position: relative;
+  z-index: 11;
+}
+
+/* Переопределяем text-white класс для SVG иконок */
+.apple-card-dark-opaque .text-white svg,
+.apple-card-dark-opaque .icon-container.text-white svg {
+  color: inherit !important;
+}
+
+/* Цвета для разных иконок в секции "Как это работает" - ЦВЕТ SVG */
+.apple-card-dark-opaque svg[data-lucide="phone"],
+.apple-card-dark-opaque .icon-container svg[data-lucide="phone"],
+.apple-card-dark-opaque .text-white svg[data-lucide="phone"] {
+  color: #60a5fa !important; /* Bright Blue цвет */
+  filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.4)) !important;
+}
+
+.apple-card-dark-opaque svg[data-lucide="message-square"],
+.apple-card-dark-opaque .icon-container svg[data-lucide="message-square"],
+.apple-card-dark-opaque .text-white svg[data-lucide="message-square"] {
+  color: #f472b6 !important; /* Pink цвет */
+  filter: drop-shadow(0 2px 8px rgba(244, 114, 182, 0.4)) !important;
+}
+
+.apple-card-dark-opaque svg[data-lucide="calendar"],
+.apple-card-dark-opaque .icon-container svg[data-lucide="calendar"],
+.apple-card-dark-opaque .text-white svg[data-lucide="calendar"] {
+  color: #34d399 !important; /* Bright Green цвет */
+  filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.4)) !important;
+}
+
+.apple-card-dark-opaque svg[data-lucide="check-circle"],
+.apple-card-dark-opaque .icon-container svg[data-lucide="check-circle"],
+.apple-card-dark-opaque .text-white svg[data-lucide="check-circle"] {
+  color: #fb923c !important; /* Orange цвет */
+  filter: drop-shadow(0 2px 8px rgba(251, 146, 60, 0.4)) !important;
+}
+
+.apple-card-dark-opaque h3 {
+  color: rgba(255, 255, 255, 1) !important;
+  font-weight: 600 !important;
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+}
+
+.apple-card-dark-opaque p {
+  color: rgba(255, 255, 255, 0.95) !important;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.apple-card-dark-opaque .text-gray-300 {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.apple-card-dark-opaque .text-gray-400 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Непрозрачная карточка календаря в hero-section */
+.glass-card-calendar-opaque {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 10;
+}
+
+.glass-card-calendar-opaque p,
+.glass-card-calendar-opaque .font-semibold {
+  opacity: 1 !important;
+  color: rgba(255, 255, 255, 1) !important;
+  position: relative;
+  z-index: 11;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.glass-card-calendar-opaque .text-gray-400 {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Цветные SVG иконки в Hero секции - ЦВЕТ SVG */
+.glass-card svg,
+.glass-card-calendar-opaque svg {
+  opacity: 1 !important;
+  position: relative;
+  z-index: 11;
+}
+
+/* Переопределяем text-white класс для Hero секции */
+.glass-card .text-white svg,
+.glass-card-calendar-opaque .text-white svg {
+  color: inherit !important;
+}
+
+.glass-card svg[data-lucide="phone"],
+.glass-card-calendar-opaque svg[data-lucide="phone"],
+.glass-card .text-white svg[data-lucide="phone"],
+.glass-card-calendar-opaque .text-white svg[data-lucide="phone"] {
+  color: #60a5fa !important; /* Bright Blue цвет */
+  filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.4));
+}
+
+.glass-card svg[data-lucide="calendar"],
+.glass-card-calendar-opaque svg[data-lucide="calendar"],
+.glass-card .text-white svg[data-lucide="calendar"],
+.glass-card-calendar-opaque .text-white svg[data-lucide="calendar"] {
+  color: #34d399 !important; /* Bright Green цвет */
+  filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.4));
+}
+
+.glass-card svg[data-lucide="check-circle"],
+.glass-card-calendar-opaque svg[data-lucide="check-circle"],
+.glass-card .text-white svg[data-lucide="check-circle"],
+.glass-card-calendar-opaque .text-white svg[data-lucide="check-circle"] {
+  color: #a855f7 !important; /* Purple цвет */
+  filter: drop-shadow(0 2px 8px rgba(168, 85, 247, 0.4));
+}
+
+.apple-card-dark-opaque .icon-container {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/* Global SVG color overrides */
+svg[data-lucide] {
+  color: currentColor !important;
+}
+
+/* Override any white text color on SVGs */
+.text-white svg[data-lucide] {
+  color: inherit !important;
+}
+
+/* Force SVG icon colors with maximum specificity */
+
+/* How it works section - Phone icon */
+.apple-card-dark-opaque .icon-container svg[data-lucide="phone"],
+.apple-card-dark-opaque .icon-container .text-white svg[data-lucide="phone"],
+.apple-card-dark-opaque svg[data-lucide="phone"],
+svg[data-lucide="phone"] {
+  color: #60a5fa !important;
+  fill: #60a5fa !important;
+  stroke: #60a5fa !important;
+  filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.5)) !important;
+}
+
+/* How it works section - Message icon */
+.apple-card-dark-opaque .icon-container svg[data-lucide="message-square"],
+.apple-card-dark-opaque .icon-container .text-white svg[data-lucide="message-square"],
+.apple-card-dark-opaque svg[data-lucide="message-square"],
+svg[data-lucide="message-square"] {
+  color: #f472b6 !important;
+  fill: #f472b6 !important;
+  stroke: #f472b6 !important;
+  filter: drop-shadow(0 0 10px rgba(244, 114, 182, 0.5)) !important;
+}
+
+/* How it works section - Calendar icon */
+.apple-card-dark-opaque .icon-container svg[data-lucide="calendar"],
+.apple-card-dark-opaque .icon-container .text-white svg[data-lucide="calendar"],
+.apple-card-dark-opaque svg[data-lucide="calendar"],
+svg[data-lucide="calendar"] {
+  color: #4ade80 !important;
+  fill: #4ade80 !important;
+  stroke: #4ade80 !important;
+  filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.5)) !important;
+}
+
+/* How it works section - Check circle icon */
+.apple-card-dark-opaque .icon-container svg[data-lucide="check-circle"],
+.apple-card-dark-opaque .icon-container .text-white svg[data-lucide="check-circle"],
+.apple-card-dark-opaque svg[data-lucide="check-circle"],
+svg[data-lucide="check-circle"] {
+  color: #fb923c !important;
+  fill: #fb923c !important;
+  stroke: #fb923c !important;
+  filter: drop-shadow(0 0 10px rgba(251, 146, 60, 0.5)) !important;
+}
+
+/* Hero section - Phone icon */
+.glass-card svg[data-lucide="phone"],
+.glass-card .text-white svg[data-lucide="phone"],
+div[class*="glass-card"] svg[data-lucide="phone"] {
+  color: #60a5fa !important;
+  fill: #60a5fa !important;
+  stroke: #60a5fa !important;
+  filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.5)) !important;
+}
+
+/* Hero section - Calendar icon */
+.glass-card-calendar-opaque svg[data-lucide="calendar"],
+.glass-card-calendar-opaque .text-white svg[data-lucide="calendar"],
+div[class*="glass-card"] svg[data-lucide="calendar"] {
+  color: #4ade80 !important;
+  fill: #4ade80 !important;
+  stroke: #4ade80 !important;
+  filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.5)) !important;
+}
+
+/* Hero section - Check circle icon */
+.glass-card svg[data-lucide="check-circle"],
+.glass-card .text-white svg[data-lucide="check-circle"],
+div[class*="glass-card"] svg[data-lucide="check-circle"] {
+  color: #a855f7 !important;
+  fill: #a855f7 !important;
+  stroke: #a855f7 !important;
+  filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5)) !important;
+}
+
+
+
+/* Smooth Animations */
+.smooth-bounce {
+  animation: smooth-bounce 2s infinite;
+}
+
+@keyframes smooth-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Apple-style Text Effects */
+.text-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .smooth-bounce,
+  .gradient-mesh,
+  .animate-grid {
+    animation: none;
+  }
+  
+  .apple-card,
+  .apple-card-dark,
+  .apple-button {
+    transition: none;
+  }
 }
