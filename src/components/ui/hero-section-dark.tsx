@@ -1,4 +1,5 @@
 import * as React from "react"
+import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ChevronRight } from "lucide-react"
 
@@ -112,15 +113,21 @@ const HeroSection = React.forwardRef<HTMLDivElement, HeroSectionProps>(
             </div>
             {bottomImage && (
               <div className="mt-14">
-                <img
+                <Image
                   src={bottomImage.light}
                   alt="Dashboard preview"
                   className="w-full mx-auto rounded-xl shadow-lg dark:hidden"
+                  width={1200}
+                  height={800}
+                  priority
                 />
-                <img
+                <Image
                   src={bottomImage.dark}
                   alt="Dashboard preview"
                   className="w-full mx-auto rounded-xl shadow-lg hidden dark:block"
+                  width={1200}
+                  height={800}
+                  priority
                 />
               </div>
             )}
